@@ -4,6 +4,8 @@ pipeline {
     environment {
         DOCKER_REGISTRY_CREDENTIALS = 'DockerHubCred'
         DOCKER_IMAGE_NAME = 'hariprasad0023/calculator'
+        LANG = 'en_US.UTF-8'
+
     }
 
     stages {
@@ -15,36 +17,28 @@ pipeline {
                     doGenerateSubmoduleConfigurations: false,
                     extensions: [],
                     submoduleCfg: [],
-                    userRemoteConfigs: [[url: '']]
+                    userRemoteConfigs: [[url: 'https://github.com/HariPrasad0023/ScientificCalculator.git']]
                 ])
             }
         }
 
         stage('Build') {
             steps {
-                dir('/home/hari/Desktop/Sem2/SPE_MiniProject') {
                     sh 'mvn clean package'
-                }
             }
         }
 
         stage('Run Tests') {
             steps {
-                dir('/home/hari/Desktop/Sem2/SPE_MiniProject') {
                     sh 'mvn test'
-                }
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                dir('/home/hari/Desktop/Sem2/SPE_MiniProject') {
                     script {
-
-                        // Build Docker image
                         docker.build("${DOCKER_IMAGE_NAME}", '.')
                     }
-                }
             }
         }
 
