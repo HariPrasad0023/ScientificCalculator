@@ -34,13 +34,16 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Push Docker Images') {
             steps {
-                    script {
-                        docker.build("${DOCKER_IMAGE_NAME}", '.')
+                script {
+                    docker.withRegistry('', 'DockerHubCred') {
+                        sh "docker push ${DOCKER_IMAGE_NAME}:latest"
                     }
+                }
             }
         }
+
 
         stage('Push Docker Images') {
             steps {
