@@ -34,13 +34,13 @@ pipeline {
             }
         }
 
-                stage('Build Docker Image') {
-                    steps {
-                        script {
+        stage('Build Docker Image') {
+             steps {
+                    script {
                             docker.build(${DOCKER_IMAGE_NAME}:latest, ".")
-                        }
                     }
-                }
+             }
+        }
 
         stage('Push Docker Images') {
             steps {
